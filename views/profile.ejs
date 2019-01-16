@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Node Authentication</title>
+    <!-- bootstrap cdn links -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <!--=========================== orgchart script =================================-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+    <!-- ===============================styling========================================== -->
+    <style>
+        .title {
+            top: -3px;
+        }
+
+        #orgFrame {
+            position: relative;
+            top: 150px;
+            left: -13%;
+            width: 600px;
+            height: 600px;
+            text-align: center;
+            border: red solid
+        }
+
+        .pictureFrame {
+            position:absolute;
+            top: 350px;
+            left: 50%;
+            width: 550px;
+            height: 500px;
+            text-align: center;
+            border: black solid;
+        }
+    </style>
+</head>
+<!-- ================================= DOM =================================== -->
+
+<body>
+    <div class="container">
+
+        <div class="page-header text-center title">
+            <h1><span class="fa"></span> Family Tree</h1>
+            <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        </div>
+
+
+        <div id="orgFrame">
+
+        </div>
+        <div class="pictureFrame">
+            <img class="picture" src="http://www.gotravelpros.com/uploads/7/9/5/0/79503550/multi-gen-travel-2.jpg"></img>
+            <button type="button" class="next" onclick="next()">next</button>
+        </div>
+
+    </div>
+    <!--============================ main script ====================== -->
+
+    <!--======================== uploading pictures======================== -->
+    <script>
+        // ===============org chart==================
+        google.charts.load('current', {
+            packages: ["orgchart"]
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function Display(pictureName) {
+            var image = document.querySelector('.picture');
+            image.style.height = "500px";
+            image.style.width = "550px";
+            var src = pictureName.toLowerCase().split(' ').join('_');
+            image.src = '/image/' + src + '/' + 1;
+
+        }
+
+        function next() {
+            var image = document.querySelector('.picture');
+            urlArray = image.src.split('/')
+            imageId = urlArray[urlArray.length - 1]
+            imageId = parseInt(imageId)
+            imageId = imageId + 1
+            urlArray[urlArray.length - 1] = imageId;
+            image.src = urlArray.join('/')
+        }
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+
+            data.addColumn('string', 'Name');
+            data.addColumn('string', 'Manager');
+            data.addColumn('string', 'ToolTip');
+
+            // For each orgchart box, provide the name, manager, and tooltip to show.
+            data.addRows([
+                [{
+                        v: 'My Family',
+                        f: 'My Family<div style="color:red; font-style:italic"></div>',
+                    },
+                    '', ''
+                ],
+
+                [{
+                        v: 'Ryeon Naderi',
+                        f: 'Ryeon Naderi<div style="color:red; font-style:italic">brother</div>'
+                    },
+                    'My Family', 'brother'
+                ],
+                [{
+                        v: 'Aurian Naderi',
+                        f: 'Aurian Naderi<div style="color:red; font-style:italic">brother</div>'
+                    },
+                    'My Family', 'brother'
+                ],
+                [{
+                        v: 'Kas Naderi',
+                        f: 'Kas Naderi<div style="color:red; font-style:italic">dad</div>'
+                    },
+                    'Ryeon Naderi', 'dad'
+                ],
+                [{
+                        v: 'Arezoo Akhavan',
+                        f: 'Arezoo Akhavan<div style="color:red; font-style:italic">mom</div>'
+                    },
+                    'Ryeon Naderi', 'mom'
+                ],
+                [{
+                        v: 'Kaveh Naderi',
+                        f: 'Kaveh Naderi<div style="color:red; font-style:italic">uncle</div>'
+                    },
+                    'Ryeon Naderi', 'uncle'
+                ],
+                [{
+                        v: 'Mohmad Akhavan',
+                        f: 'Mohmad Akhavan<div style="color:red; font-style:italic">grandad</div>'
+                    },
+                    'Arezoo Akhavan', 'grandad'
+                ],
+                [{
+                        v: 'Mehri',
+                        f: 'Mehri<div style="color:red; font-style:italic">Grandma</div>'
+                    },
+                    'Arezoo Akhavan', 'Grandma'
+                ],
+                [{
+                        v: 'Shahin',
+                        f: 'Shahin<div style="color:red; font-style:italic">grandma</div>'
+                    },
+                    'Kaveh Naderi', 'grandma'
+                ],
+
+                [{
+                        v: 'Aboleghasem',
+                        f: 'Aboleghasem<div style="color:red; font-style:italic">grandad</div>'
+                    },
+                    'Kaveh Naderi', 'grandad'
+                ],
+
+                [{
+                        v: 'Abolghasem',
+                        f: 'Abolghasem<div style="color:red; font-style:italic">grandad</div>'
+                    },
+                    'Kas Naderi', 'grandad'
+                ],
+
+                [{
+                        v: 'Mehry',
+                        f: 'Mehry<div style="color:red; font-style:italic">grandma</div>'
+                    },
+                    'Kas Naderi', 'grandma'
+                ],
+                [{
+                        v: 'Kobra',
+                        f: 'Kobra<div style="color:red; font-style:italic">great grandma</div>'
+                    },
+                    'Abolghasem', 'Great Grandma'
+                ],
+                [{
+                        v: 'Robab',
+                        f: 'Robab<div style="color:red; font-style:italic">Great Grandma</div>'
+                    },
+                    'Mehry', 'Great Grandma'
+                ],
+
+
+            ]);
+            // images/Robab/Robab/
+            // Create the chart.
+            var chart = new google.visualization.OrgChart(document.getElementById("orgFrame"));
+
+            // Draw the chart, setting the allowHtml option to true for the tooltips.
+            chart.draw(data, {
+                allowHtml: true
+            });
+            // make clickable
+            google.visualization.events.addListener(chart, 'select', function () {
+                var row = chart.getSelection()[0].row;
+                Display(data.getValue(row, 0));
+                // name = data.getValue(row,0)
+                // fire a POST request to the node telling what is the value of
+            });
+
+        }
+    </script>
+</body>
+
+</html>
