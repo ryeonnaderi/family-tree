@@ -20,21 +20,29 @@
         }
 
         #orgFrame {
-            position: relative;
+            position: absolute;
             top: 150px;
-            left: -13%;
+            left: 3%;
             width: 600px;
             height: 600px;
             text-align: center;
             border: red solid
         }
-
+        .pictureSheet{
+            position: absolute;
+            top: 150px;
+            left: 36%;
+            width: 600px;
+            height:600px; 
+            border: blue solid;
+        }
+        
         .pictureFrame {
             position:absolute;
-            top: 350px;
-            left: 50%;
-            width: 550px;
-            height: 500px;
+            top: 150px;
+            left: 68%;
+            width: 600px;
+            height: 100rem;
             text-align: center;
             border: black solid;
         }
@@ -49,13 +57,14 @@
             <h1><span class="fa"></span> Family Tree</h1>
             <a href="/logout" class="btn btn-default btn-sm">Logout</a>
         </div>
-
+        <div class="pictureSheet"></div>
 
         <div id="orgFrame">
 
         </div>
         <div class="pictureFrame">
-            <img class="picture" src="http://www.gotravelpros.com/uploads/7/9/5/0/79503550/multi-gen-travel-2.jpg"></img>
+            <img class="picture"></img>
+            <button type="button" class="back" onclick="back()" >previous</button>
             <button type="button" class="next" onclick="next()">next</button>
         </div>
 
@@ -72,11 +81,20 @@
 
         function Display(pictureName) {
             var image = document.querySelector('.picture');
-            image.style.height = "500px";
-            image.style.width = "550px";
+            image.style.height = "100%";
+            image.style.width = "600px";
             var src = pictureName.toLowerCase().split(' ').join('_');
             image.src = '/image/' + src + '/' + 1;
 
+        }
+        function back(){
+            var image = document.querySelector('.picture');
+            urlArray = image.src.split('/')
+            imageId = urlArray[urlArray.length - 1]
+            imageId = parseInt(imageId)
+            imageId = imageId -1
+            urlArray[urlArray.length - 1] = imageId;
+            image.src = urlArray.join('/')
         }
 
         function next() {
